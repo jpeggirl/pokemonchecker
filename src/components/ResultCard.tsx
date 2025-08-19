@@ -56,7 +56,7 @@ export default function ResultCard({ result }: ResultCardProps) {
                 onError={(e) => {
                   console.log('Profile image failed to load, using fallback');
                   const target = e.target as HTMLImageElement;
-                  target.src = "https://api.dicebear.com/7.x/avataaars/svg?seed=fallback";
+                  target.src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${result.user.username}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`;
                 }}
                 onLoad={() => {
                   console.log('Profile image loaded successfully:', result.user.profile_image_url);
