@@ -1,4 +1,4 @@
-import { Pokemon } from '@/types';
+import { Pokemon, PersonalityAnalysis } from '@/types';
 
 // Comprehensive Pokemon database with personality traits
 export const pokemonDatabase: Pokemon[] = [
@@ -584,7 +584,7 @@ export const moveDatabase = {
   ]
 };
 
-export function suggestMoveFromTweets(analysis: any): string {
+export function suggestMoveFromTweets(analysis: PersonalityAnalysis): string {
   if (analysis.energy_level === "high" && analysis.humor_style === "playful") {
     return moveDatabase.physical[Math.floor(Math.random() * moveDatabase.physical.length)];
   } else if (analysis.communication_style === "analytical") {
@@ -601,7 +601,7 @@ export function suggestMoveFromTweets(analysis: any): string {
 }
 
 export function findBestPokemonMatch(traits: string[]): Pokemon {
-  let bestMatches: { pokemon: Pokemon; score: number; matchingTraits: string[] }[] = [];
+  const bestMatches: { pokemon: Pokemon; score: number; matchingTraits: string[] }[] = [];
 
   // Calculate scores for all Pokemon
   for (const pokemon of pokemonDatabase) {

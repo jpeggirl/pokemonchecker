@@ -23,7 +23,7 @@ async function analyzePersonality(tweets: string[]): Promise<PersonalityAnalysis
   
   let humor_style = "dry";
   let communication_style = "casual";
-  let interests: string[] = [];
+  const interests: string[] = [];
   let energy_level = "medium";
   let social_tendency = "balanced";
   let creativity_level = "moderate";
@@ -205,7 +205,7 @@ function generateTraitsFromAnalysis(analysis: PersonalityAnalysis): string[] {
   return [...new Set(traits)];
 }
 
-function generateFunExplanation(pokemon: any, analysis: PersonalityAnalysis): string {
+function generateFunExplanation(pokemon: Pokemon, analysis: PersonalityAnalysis): string {
   const reasons = [];
   
   // Specific Pokemon explanations

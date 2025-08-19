@@ -112,7 +112,7 @@ export default function ResultCard({ result }: ResultCardProps) {
 
           <div className="pt-4 border-t border-white/30">
             <p className="text-sm font-medium text-gray-600">
-              What's Your Pokémon? 🔮
+              What&apos;s Your Pokémon? 🔮
             </p>
             <p className="text-xs text-gray-500">
               Discover your Pokémon personality match!

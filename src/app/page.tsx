@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import ResultCard from "@/components/ResultCard";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { AnalysisResult } from "@/types";
@@ -45,7 +44,7 @@ export default function Home() {
       <div className="max-w-md w-full space-y-8 text-center">
         <div className="space-y-4">
           <h1 className="text-4xl font-bold text-gray-900">
-            What's Your Pokémon? 🔮
+            What&apos;s Your Pokémon? 🔮
           </h1>
           <p className="text-gray-600">
             Enter a Twitter handle and discover which Pokémon matches their personality!
