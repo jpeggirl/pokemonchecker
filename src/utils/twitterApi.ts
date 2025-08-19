@@ -133,24 +133,27 @@ export async function getTwitterData(username: string): Promise<{ user: TwitterU
 }
 
 export async function getMockTwitterData(username: string): Promise<{ user: TwitterUser; tweets: Tweet[] }> {
-  // Try to fetch profile image from unavatar.io service
+  // Try multiple approaches to get profile image
   let profileImageUrl = "https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png";
   
   try {
-    // Use unavatar.io service to get Twitter profile images
-    const response = await fetch(`https://unavatar.io/twitter/${username}`, {
-      method: 'HEAD', // Just check if the image exists
+    // Try unavatar.io first
+    const unavatarResponse = await fetch(`https://unavatar.io/twitter/${username}`, {
+      method: 'HEAD',
     });
     
-    if (response.ok) {
+    if (unavatarResponse.ok) {
       profileImageUrl = `https://unavatar.io/twitter/${username}`;
+      console.log('Using unavatar.io for profile image');
     } else {
-      // Fallback to Twitter's default profile image
-      profileImageUrl = "https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png";
+      // Try alternative approach - use a different service
+      profileImageUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}`;
+      console.log('Using DiceBear fallback for profile image');
     }
   } catch (error) {
     console.log('Could not fetch profile image, using default:', error);
-    profileImageUrl = "https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png";
+    // Use a generated avatar as fallback
+    profileImageUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}`;
   }
 
   const mockUser: TwitterUser = {

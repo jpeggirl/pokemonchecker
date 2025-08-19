@@ -386,6 +386,8 @@ export async function POST(request: NextRequest) {
 
     const { user, tweets } = await getTwitterData(username);
     
+    console.log('Profile image URL:', user.profile_image_url);
+    
     const tweetTexts = tweets.map(tweet => tweet.text);
     const analysis = await analyzePersonality(tweetTexts);
     
