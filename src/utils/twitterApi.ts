@@ -133,15 +133,24 @@ export async function getTwitterData(username: string): Promise<{ user: TwitterU
 }
 
 export async function getMockTwitterData(username: string): Promise<{ user: TwitterUser; tweets: Tweet[] }> {
-  // Try to fetch profile image from Twitter's public profile URL
+  // Try to fetch profile image from unavatar.io service
   let profileImageUrl = "https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png";
   
   try {
-    // Use Twitter's public profile image URL format
-    const twitterProfileUrl = `https://unavatar.io/twitter/${username}`;
-    profileImageUrl = twitterProfileUrl;
-  } catch {
-    console.log('Could not fetch profile image, using default');
+    // Use unavatar.io service to get Twitter profile images
+    const response = await fetch(`https://unavatar.io/twitter/${username}`, {
+      method: 'HEAD', // Just check if the image exists
+    });
+    
+    if (response.ok) {
+      profileImageUrl = `https://unavatar.io/twitter/${username}`;
+    } else {
+      // Fallback to Twitter's default profile image
+      profileImageUrl = "https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png";
+    }
+  } catch (error) {
+    console.log('Could not fetch profile image, using default:', error);
+    profileImageUrl = "https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png";
   }
 
   const mockUser: TwitterUser = {

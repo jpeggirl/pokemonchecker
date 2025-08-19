@@ -52,6 +52,11 @@ export default function ResultCard({ result }: ResultCardProps) {
               width={60}
               height={60}
               className="rounded-full border-4 border-white shadow-lg"
+              onError={(e) => {
+                // Fallback to default profile image if the original fails
+                const target = e.target as HTMLImageElement;
+                target.src = "https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png";
+              }}
             />
             <div className="text-2xl font-bold">⚡</div>
             <Image
