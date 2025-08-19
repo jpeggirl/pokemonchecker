@@ -133,11 +133,22 @@ export async function getTwitterData(username: string): Promise<{ user: TwitterU
 }
 
 export async function getMockTwitterData(username: string): Promise<{ user: TwitterUser; tweets: Tweet[] }> {
+  // Try to fetch profile image from Twitter's public profile URL
+  let profileImageUrl = "https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png";
+  
+  try {
+    // Use Twitter's public profile image URL format
+    const twitterProfileUrl = `https://unavatar.io/twitter/${username}`;
+    profileImageUrl = twitterProfileUrl;
+  } catch {
+    console.log('Could not fetch profile image, using default');
+  }
+
   const mockUser: TwitterUser = {
     id: "12345",
     username: username,
     name: `${username.charAt(0).toUpperCase() + username.slice(1)}`,
-    profile_image_url: "https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png",
+    profile_image_url: profileImageUrl,
     description: "Just a regular Twitter user who loves to tweet!",
     public_metrics: {
       followers_count: Math.floor(Math.random() * 10000),
