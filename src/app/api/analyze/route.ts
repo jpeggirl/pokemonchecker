@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getTwitterData } from '@/utils/twitterApi';
 import { findBestPokemonMatch, suggestMoveFromTweets } from '@/utils/pokemonData';
-import { PersonalityAnalysis } from '@/types';
+import { PersonalityAnalysis, Pokemon } from '@/types';
 
 async function analyzePersonality(tweets: string[]): Promise<PersonalityAnalysis> {
   if (tweets.length === 0) {
@@ -306,7 +306,7 @@ function generateFunExplanation(pokemon: Pokemon, analysis: PersonalityAnalysis)
   return reasons.join(" ");
 }
 
-function generateMoveExplanation(move: string, analysis: PersonalityAnalysis): string {
+function generateMoveExplanation(move: string): string {
   const moveExplanations: { [key: string]: string } = {
     // Physical moves
     "Tackle": "Your direct, straightforward approach to problems!",
@@ -396,7 +396,7 @@ export async function POST(request: NextRequest) {
     
     // Generate move suggestion based on tweet analysis
     const suggestedMove = suggestMoveFromTweets(analysis);
-    const moveExplanation = generateMoveExplanation(suggestedMove, analysis);
+    const moveExplanation = generateMoveExplanation(suggestedMove);
     
     const funFacts = [
       `Based on ${tweets.length} recent tweets`,
