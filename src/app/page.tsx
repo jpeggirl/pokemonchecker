@@ -29,7 +29,7 @@ export default function Home() {
         setResult(data);
       } else {
         const errorData = await response.json();
-        alert(`Analysis failed: ${errorData.error || 'Unknown error'}`);
+        alert(errorData.error || 'Analysis failed: Unknown error');
       }
     } catch (error) {
       console.error("Error:", error);

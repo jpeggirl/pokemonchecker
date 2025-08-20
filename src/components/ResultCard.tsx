@@ -122,6 +122,13 @@ export default function ResultCard({ result }: ResultCardProps) {
             {result.fun_facts.map((fact, index) => (
               <p key={index}>• {fact}</p>
             ))}
+            {result.is_mock_data && (
+              <div className="mt-2 p-2 bg-yellow-100 border border-yellow-300 rounded-lg">
+                <p className="text-yellow-800 text-xs">
+                  🎭 Demo Mode: This is sample data. Add Twitter API credentials to see real profiles!
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="pt-4 border-t border-white/30">

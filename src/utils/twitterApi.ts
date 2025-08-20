@@ -112,27 +112,41 @@ export async function fetchUserTweets(userId: string): Promise<Tweet[]> {
   }
 }
 
-export async function getTwitterData(username: string): Promise<{ user: TwitterUser; tweets: Tweet[] }> {
+export async function getTwitterData(username: string): Promise<{ user: TwitterUser; tweets: Tweet[]; is_mock_data?: boolean }> {
   if (!process.env.TWITTER_API_KEY || !process.env.TWITTER_API_SECRET) {
-    console.log('No Twitter API credentials found, using mock data');
+    console.log('❌ No Twitter API credentials found, using mock data');
+    console.log('Environment check:', {
+      TWITTER_API_KEY: process.env.TWITTER_API_KEY ? 'Set' : 'Not set',
+      TWITTER_API_SECRET: process.env.TWITTER_API_SECRET ? 'Set' : 'Not set'
+    });
     return getMockTwitterData(username);
   }
 
   try {
+    console.log('🔍 Attempting to fetch real Twitter data for:', username);
     const user = await fetchTwitterUser(username);
     if (!user) {
       throw new Error('User not found');
     }
 
     const tweets = await fetchUserTweets(user.id);
+    console.log('✅ Successfully fetched real Twitter data');
     return { user, tweets };
   } catch (error) {
-    console.error('Twitter API failed, falling back to mock data:', error);
+    console.error('❌ Twitter API failed:', error);
+    
+    // Check if it's a rate limit error
+    if (error instanceof Error && error.message.includes('429')) {
+      throw new Error('RATE_LIMIT_EXCEEDED');
+    }
+    
+    // For other errors, fall back to mock data
+    console.log('Falling back to mock data');
     return getMockTwitterData(username);
   }
 }
 
-export async function getMockTwitterData(username: string): Promise<{ user: TwitterUser; tweets: Tweet[] }> {
+export async function getMockTwitterData(username: string): Promise<{ user: TwitterUser; tweets: Tweet[]; is_mock_data?: boolean }> {
   // Generate a reliable avatar using DiceBear API
   const profileImageUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`;
   
@@ -185,5 +199,5 @@ export async function getMockTwitterData(username: string): Promise<{ user: Twit
     }
   ];
 
-  return { user: mockUser, tweets: mockTweets };
+  return { user: mockUser, tweets: mockTweets, is_mock_data: true };
 }

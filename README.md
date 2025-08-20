@@ -20,6 +20,29 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Twitter API Setup
+
+This application uses Twitter API v2 to fetch real user profiles and tweets. To enable real data instead of demo data:
+
+1. **Get Twitter API Access:**
+   - Go to [Twitter Developer Portal](https://developer.twitter.com/en/portal/dashboard)
+   - Apply for API access (Basic or Pro plan)
+   - Create a new app to get your API credentials
+
+2. **Configure Environment Variables:**
+   Create a `.env.local` file in the root directory with:
+   ```
+   TWITTER_API_KEY=your_twitter_api_key_here
+   TWITTER_API_SECRET=your_twitter_api_secret_here
+   ```
+
+3. **For Production (Vercel):**
+   - Go to your Vercel project settings
+   - Add the environment variables in the "Environment Variables" section
+   - Redeploy your application
+
+**Note:** Without Twitter API credentials, the app will show demo data for demonstration purposes.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

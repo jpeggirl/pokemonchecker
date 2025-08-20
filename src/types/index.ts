@@ -40,6 +40,7 @@ export interface AnalysisResult {
   fun_facts: string[];
   suggested_move: string;
   move_explanation: string;
+  is_mock_data?: boolean;
 }
 
 export interface PersonalityAnalysis {
@@ -49,4 +50,11 @@ export interface PersonalityAnalysis {
   energy_level: string;
   social_tendency: string;
   creativity_level: string;
+  // New dimensions for more variety
+  emotional_expression: string;
+  time_preference: string;
+  decision_making: string;
+  learning_style: string;
+  stress_response: string;
+  motivation_type: string;
 }
